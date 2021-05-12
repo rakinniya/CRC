@@ -1,7 +1,8 @@
 /*
 Preprocessor Defenitions
-#define CRC_INIT 0xFFFF
 */
+#define CRC_INIT (0xFFFF<<1)
+
 /*
 Type defenitions
 */
@@ -24,12 +25,13 @@ ui16 CRC_16_CCITT(ui8* bitstream,ui32 len)
 		while(BYTE_Len--)
 		{
 			dividnd=CRC_buf;
+			dividnd=(dividnd<<1)|0x1FFFF;
 			BIT=( (BYTE>>8) &0x1 );
 			dividnd=dividnd|BIT;
 			/*
 			compute 
 			*/
-			if(BIT==1) 
+			if((dividnd>>17)==1) 
 			{
 				CRC_buf=dividnd^CRC_buf;
 			}
@@ -37,13 +39,13 @@ ui16 CRC_16_CCITT(ui8* bitstream,ui32 len)
 		}
 	}
 }
-	
-	
-	
-	
-}
-
 void main()
 {
 	//CRC
+char data={0xab,0xcd,0xef,0xab,0xcd,0xef};
+ui32 len;
+
+len=6;
+CRC=CRC_16_CCITT(data,len);
+printf("CRC=%x",CRC);
 }
