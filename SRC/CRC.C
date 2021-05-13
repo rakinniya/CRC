@@ -16,7 +16,7 @@ ui16 CRC_16_CCITT(ui8* bitstream,ui32 len)
 	Local Variables
 	*/
 	ui32 Polnoml=0x11021;//1 0001 0000 0010 0001
-	ui32 CRC_buf=CRC_INIT;//1 1111 1111 1111 111*
+	ui32 CRC_buf=CRC_INIT;//1111 1111 1111 1111
 	ui32 BYTE=0,dividnd=0;
 	ui8 BYTE_Len=0,BIT=0,index;
 	
