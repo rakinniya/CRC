@@ -26,7 +26,10 @@ ui32 CRC_16_CCITT(ui8* bitstream,ui32 len)
 	ui32 CRC_buf=CRC_INIT;//1111 1111 1111 1111
 	ui32 BYTE=0,dividnd=0;
 	ui8 BYTE_Len=0,BIT=0,index;
-
+	
+	if(bitstream==NULL)
+		return 0;
+	
 	for(index=0;index<len;index++)
 	{
 		printf("index=%d   ",index);//DEBUG
@@ -77,14 +80,79 @@ ui32 CRC_16_CCITT(ui8* bitstream,ui32 len)
 	}
 	return CRC_buf;
 }
-void main()
+int main()
 {
-	//CRC
-unsigned char data[10]={0x41}; //0100 0001
-ui32 len,CRC=0;
+	testcode1();
+	testcode2();
+	testcode3();
+	testcode4();
+	return 0;
+}
+// Normal Case :
+void testcode1()
+{
+	unsigned char data[10]={0x41}; //0100 0001	
+	ui32 len,CRC=0;
+	
+	printf("\nTestcode1 \n");
 
-len=1;
-CRC=CRC_16_CCITT(data,len);
-printf("CRC=%x",CRC);
+	len=1;
+	CRC=CRC_16_CCITT(data,len);
+	if(CRC==0x9479)
+	{
+		printf("\nTestcode1 PASSED\n\n");
+	}
+	else
+	{
+		printf("\nTestcode1 FAILED\n\n");
+	}
 }
 
+void testcode2()
+{
+	unsigned char data[10]={0x41}; //0100 0001
+	ui32 len,CRC=0;
+	
+	printf("\nTestcode2 \n");
+	
+	len=0;
+	CRC=CRC_16_CCITT(data,len);
+	printf("CRC=%x",CRC);
+}
+
+void testcode3()
+{
+	unsigned char data[1234]={0}; //0100 0001
+	ui32 len,CRC=0;
+	
+	printf("\nTestcode3 \n");
+	
+	len=1;
+	CRC=CRC_16_CCITT(data,len);
+	if(CRC==0xCC9C)
+	{
+		printf("\nTestcode3 PASSED\n\n");
+	}
+	else
+	{
+		printf("\nTestcode3 FAILED\n\n");
+	}
+}
+
+void testcode4()
+{
+	unsigned char data[1234]={0}; //0100 0001
+	ui32 len,CRC=0;
+	len=1234;
+	
+	printf("\nTestcode4 \n");
+	CRC=CRC_16_CCITT(NULL,len);
+	if(CRC==0)
+	{
+		printf("Testcode4 PASSED\n\n");
+	}
+	else
+	{
+		printf("Testcode4 FAILED\n\n");
+	}
+}
